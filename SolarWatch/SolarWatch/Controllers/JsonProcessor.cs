@@ -7,9 +7,15 @@ public class JsonProcessor : IJsonProcessor
 {
     public SolarWatch Process(string data, bool picker)
     {
+        if (string.IsNullOrWhiteSpace(data))
+        {
+            throw new Exception("Invalid JSON data");
+        }
+        
         SolarWatch solarWatch = new SolarWatch();
-
+        
         JsonDocument json = JsonDocument.Parse(data);
+        
         if (picker)
         {
             //Access the first element in the JSON array

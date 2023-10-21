@@ -17,7 +17,35 @@ public class SolarWatchController : ControllerBase
         _solarDataProvider = solarDataProvider;
         _jsonProcessor = jsonProcessor;
     }
+    
+    [HttpGet("GetCurrent")]
+    public async Task<ActionResult<SolarWatch>> GetCurrent([Required]string city)
+    {
+        try
+        {
+            var cityData = await _solarDataProvider.GetCurrentAsync(city);
+            var availableCityData = _jsonProcessor.Process(cityData, true);
 
+            var solarData = await _solarDataProvider.GetCurrentAsync(availableCityData.Latitude, availableCityData.Longitude);
+            var availableSolarData = _jsonProcessor.Process(solarData, false);
+
+            return new SolarWatch
+            {
+                City = availableCityData.City,
+                Latitude = availableCityData.Latitude,
+                Longitude = availableCityData.Longitude,
+                Sunrise = availableSolarData.Sunrise,
+                Sunset = availableSolarData.Sunset
+            };
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error getting solar data");
+            return NotFound("Error getting solar data");
+        }
+    }
+
+    /*
     [HttpGet("GetCurrent")]
     public ActionResult<SolarWatch> GetCurrent([Required]string city)
     {
@@ -44,4 +72,5 @@ public class SolarWatchController : ControllerBase
             return NotFound("Error getting solar data");
         }
     }
+    */
 }
