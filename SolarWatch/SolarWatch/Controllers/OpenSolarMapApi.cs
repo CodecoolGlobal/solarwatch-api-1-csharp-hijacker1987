@@ -2,13 +2,15 @@ using System.Net;
 
 namespace SolarWatch.Controllers;
 
-public class OpenSolarMapApi : ApiKey.ApiKey, ISolarDataProvider
+public class OpenSolarMapApi : ISolarDataProvider
 {
     private readonly ILogger<OpenSolarMapApi> _logger;
+    public string Api { get; }
    
     public OpenSolarMapApi(ILogger<OpenSolarMapApi> logger)
     {
         _logger = logger;
+        Api = "1593b000aeea6d27a1247cb005f6103b";
     }
     
     public async Task<string> GetCurrentAsync(double lat, double lon)
