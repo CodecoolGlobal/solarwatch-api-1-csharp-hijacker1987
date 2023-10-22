@@ -2,7 +2,7 @@ using System.Net;
 
 namespace SolarWatch.Controllers;
 
-public class OpenSolarMapApi : ApiKey, ISolarDataProvider
+public class OpenSolarMapApi : ApiKey.ApiKey, ISolarDataProvider
 {
     private readonly ILogger<OpenSolarMapApi> _logger;
    

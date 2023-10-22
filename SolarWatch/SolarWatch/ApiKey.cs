@@ -1,11 +1,12 @@
-namespace SolarWatch;
-
-public class ApiKey
+namespace ApiKey
 {
-    protected string Api { get; }
-
-    protected ApiKey()
+    public class ApiKey
     {
-        Api = "1593b000aeea6d27a1247cb005f6103b";
+        protected string Api { get; }
+
+        protected ApiKey()
+        {
+            Api = "1593b000aeea6d27a1247cb005f6103b";
+        }
     }
 }
