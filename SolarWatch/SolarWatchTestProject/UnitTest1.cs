@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using Newtonsoft.Json;
 using SolarWatch.Controllers;
+using SolarWatch.Data;
 using SolarWatch = SolarWatch.SolarWatch;
 
 namespace SolarWatchTestProject;
@@ -15,14 +16,16 @@ public class WeatherForecastControllerTests
     private Mock<ISolarDataProvider> _weatherDataProviderMock;
     private Mock<IJsonProcessor> _jsonProcessorMock;
     private SolarWatchController _controller;
-
+    private Mock<CityApiContext> _repositoryMock;
+    
     [SetUp]
     public void SetUp()
     {
         _loggerMock = new Mock<ILogger<SolarWatchController>>();
         _weatherDataProviderMock = new Mock<ISolarDataProvider>();
         _jsonProcessorMock = new Mock<IJsonProcessor>();
-        _controller = new SolarWatchController(_loggerMock.Object, _weatherDataProviderMock.Object, _jsonProcessorMock.Object);
+        _repositoryMock = new Mock<CityApiContext>();
+        _controller = new SolarWatchController(_loggerMock.Object,  _repositoryMock.Object);
     }
     
     [Test]

@@ -1,48 +1,39 @@
 using System.Globalization;
 using System.Text.Json;
+using SolarWatch.Model;
 
 namespace SolarWatch.Controllers;
 
 public class JsonProcessor : IJsonProcessor
 {
-    public SolarWatch Process(string data, bool picker)
+    public City Process(string data)
     {
-        if (string.IsNullOrWhiteSpace(data))
+        var json = JsonDocument.Parse(data).RootElement[0];
+        
+        if (json.TryGetProperty("state", out var stateElement))
         {
-            throw new Exception("Invalid JSON data");
-        }
-        
-        SolarWatch solarWatch = new SolarWatch();
-        
-        JsonDocument json = JsonDocument.Parse(data);
-        
-        if (picker)
-        {
-            //Access the first element in the JSON array
-            JsonElement city = json.RootElement.EnumerateArray().FirstOrDefault();
-
-            solarWatch.Latitude = (float)city.GetProperty("lat").GetDecimal();
-            solarWatch.Longitude = (float)city.GetProperty("lon").GetDecimal();
-            solarWatch.City = city.GetProperty("name").GetString();
+            return new City(json.GetProperty("name").ToString(),
+                json.GetProperty("lon").GetDouble(),
+                json.GetProperty("lat").GetDouble(),
+                stateElement.ToString(),
+                json.GetProperty("country").ToString());
         }
         else
         {
-            //Access the "results" object in the JSON
-            JsonElement results = json.RootElement.GetProperty("results");
-
-            solarWatch.Sunrise = ParseTimeString(results.GetProperty("sunrise").GetString());
-            solarWatch.Sunset = ParseTimeString(results.GetProperty("sunset").GetString());
+            return new City(json.GetProperty("name").ToString(),
+                json.GetProperty("lon").GetDouble(),
+                json.GetProperty("lat").GetDouble(),
+                "-",
+                json.GetProperty("country").ToString()
+            );
         }
-
-        return solarWatch;
     }
 
-    private static string ParseTimeString(string? timeString)
+    public SunriseSunsetTimes SunTimeProcess(string data)
     {
-        DateTime dateTime = DateTime.ParseExact(timeString, "h:mm:ss tt", CultureInfo.InvariantCulture);
-    
-        //Format the DateTime as a string with the desired format
-        return dateTime.ToString("h:mm:ss tt", CultureInfo.InvariantCulture);
-    }
+        var json = JsonDocument.Parse(data);
+        var results = json.RootElement.GetProperty("results");
 
+        return new SunriseSunsetTimes(results.GetProperty("sunrise").ToString(), results.GetProperty("sunset").ToString());
+    }
 }

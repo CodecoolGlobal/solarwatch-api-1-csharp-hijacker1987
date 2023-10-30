@@ -1,6 +1,9 @@
+using SolarWatch.Model;
+
 namespace SolarWatch.Controllers;
 
 public interface IJsonProcessor
 {
-    SolarWatch Process(string data, bool picker);
+    City Process(string data);
+    SunriseSunsetTimes SunTimeProcess(string data);
 }
