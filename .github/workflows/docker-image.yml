@@ -32,7 +32,7 @@ jobs:
         - name: Build and push
           uses: docker/build-push-action@v2
           with:
-            context: SolarWatch/SolarWatch
+            context: SolarWatch
             push: true
             tags: k1llerrat87/solarwatchapp:latest
             dockerfile: Dockerfile
