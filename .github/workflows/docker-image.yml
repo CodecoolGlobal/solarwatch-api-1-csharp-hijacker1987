@@ -1,18 +1,38 @@
-name: Docker Image CI
+name: Docker Build and Push
 
 on:
+  workflow_dispatch:
   push:
-    branches: [ "development" ]
-  pull_request:
-    branches: [ "development" ]
+    branches: [development]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . -f SolarWatch/Solarwatch/Dockerfile -t solarwatch:$(date +%s)
+        - name: Checkout repository
+          uses: actions/checkout@v2
+             
+        - name: Set up QEMU
+          if: runner.os == 'Linux'
+          uses: docker/setup-qemu-action@v1
+
+        - name: Set up Docker Buildx
+          if: runner.os == 'Linux'
+          uses: docker/setup-buildx-action@v1
+
+        - name: List files in context
+          run: ls -R
+  
+        - name: Login to DockerHub
+          uses: docker/login-action@v1
+          with:
+            username: k1llerrat87
+            password: dckr_pat_vOmuQVoqQCSltPdY8gt7_m-H0h8
+
+        - name: Build and push
+          uses: docker/build-push-action@v2
+          with:
+            context: SolarWatch/SolarWatch
+            push: true
+            tags: k1llerrat87/solarwatchapp:latest
+            dockerfile: Dockerfile
