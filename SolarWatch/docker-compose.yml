@@ -1,0 +1,20 @@
+﻿version: '3'
+
+services:
+  web:
+    image: solarwatch
+    # Add your web service configurations here
+
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: sample_db
+      MYSQL_USER: sample_user
+      MYSQL_PASSWORD: sample_password
+    volumes:
+      - db-data:/var/lib/mysql
+    # Add other configurations for the database service here
+
+volumes:
+  db-data:

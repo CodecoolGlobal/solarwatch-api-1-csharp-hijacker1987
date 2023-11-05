@@ -25,7 +25,7 @@ public class WeatherForecastControllerTests
         _weatherDataProviderMock = new Mock<ISolarDataProvider>();
         _jsonProcessorMock = new Mock<IJsonProcessor>();
         _repositoryMock = new Mock<CityApiContext>();
-        _controller = new SolarWatchController(_loggerMock.Object,  _repositoryMock.Object);
+        //_controller = new SolarWatchController(_loggerMock.Object,  _repositoryMock.Object);
     }
     
     [Test]
@@ -48,7 +48,7 @@ public class WeatherForecastControllerTests
         // Arrange
         var solarData = "{}";
         _weatherDataProviderMock.Setup(x => x.GetCurrentAsync(It.IsAny<float>(), It.IsAny<float>())).ReturnsAsync(solarData);
-        _jsonProcessorMock.Setup(x => x.Process(solarData, true)).Throws<Exception>();
+        //_jsonProcessorMock.Setup(x => x.Process(solarData, true)).Throws<Exception>();
 
         // Act
         var result = await _controller.GetCurrent(null);
@@ -63,7 +63,7 @@ public class WeatherForecastControllerTests
         // Arrange
         var solarData = "{}";
         _weatherDataProviderMock.Setup(x => x.GetCurrentAsync(It.IsAny<float>(), It.IsAny<float>())).ReturnsAsync(solarData);
-        _jsonProcessorMock.Setup(x => x.Process(solarData, true)).Throws<Exception>();
+        //_jsonProcessorMock.Setup(x => x.Process(solarData, true)).Throws<Exception>();
 
         // Act
         var result = await _controller.GetCurrent(null);

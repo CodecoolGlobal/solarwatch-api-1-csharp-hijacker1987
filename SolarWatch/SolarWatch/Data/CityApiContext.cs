@@ -11,6 +11,10 @@ namespace SolarWatch.Data
         public CityApiContext(DbContextOptions<CityApiContext> options) : base(options)
         {
         }
+        
+        public CityApiContext()
+        {
+        }
     
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
