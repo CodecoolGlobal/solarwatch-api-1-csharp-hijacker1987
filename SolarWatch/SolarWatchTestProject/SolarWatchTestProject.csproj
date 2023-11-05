@@ -23,4 +23,25 @@
       <ProjectReference Include="..\SolarWatch\SolarWatch.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include="obj\Debug\net7.0\SunriseSunsetTest.csproj.CopyComplete" />
+      <Content Include="obj\Debug\net7.0\SunriseSunsetTest.csproj.FileListAbsolute.txt" />
+      <Content Include="obj\Debug\net7.0\SunriseSunsetTest.GeneratedMSBuildEditorConfig.editorconfig" />
+      <Content Include="obj\project.assets.json" />
+      <Content Include="obj\project.packagespec.json" />
+      <Content Include="obj\rider.project.model.nuget.info" />
+      <Content Include="obj\rider.project.restore.info" />
+      <Content Include="obj\SolarWatchTestProject.csproj.nuget.dgspec.json" />
+      <Content Include="obj\SunriseSunsetTest.csproj.nuget.dgspec.json" />
+      <Content Include="obj\SunriseSunsetTest.csproj.nuget.g.props" />
+      <Content Include="obj\SunriseSunsetTest.csproj.nuget.g.targets" />
+      <Content Include="SunriseSunsetTest.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Include="obj\Debug\net7.0\.NETCoreApp,Version=v7.0.AssemblyAttributes.cs" />
+      <Compile Include="obj\Debug\net7.0\SunriseSunsetTest.AssemblyInfo.cs" />
+      <Compile Include="obj\Debug\net7.0\SunriseSunsetTest.GlobalUsings.g.cs" />
+    </ItemGroup>
+
 </Project>
