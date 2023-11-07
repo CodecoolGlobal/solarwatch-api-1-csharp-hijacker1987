@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Net;
 
 namespace SolarWatch.Controllers;
@@ -5,12 +6,12 @@ namespace SolarWatch.Controllers;
 public class OpenSolarMapApi : ISolarDataProvider
 {
     private readonly ILogger<OpenSolarMapApi> _logger;
-    public string Api { get; }
-   
-    public OpenSolarMapApi(ILogger<OpenSolarMapApi> logger)
+    private readonly IConfiguration _configuration;
+    
+    public OpenSolarMapApi(ILogger<OpenSolarMapApi> logger, IConfiguration config)
     {
         _logger = logger;
-        Api = "1593b000aeea6d27a1247cb005f6103b";
+        _configuration = config;
     }
     
     public async Task<string> GetCurrentAsync(double lat, double lon)
@@ -26,7 +27,8 @@ public class OpenSolarMapApi : ISolarDataProvider
     
     public async Task<string> GetCurrentAsync(string cityName)
     {
-        var url = $"http://api.openweathermap.org/geo/1.0/direct?q={cityName}&appid={Api}";
+        var api = _configuration["Api:ServiceApiKey"];
+        var url = $"http://api.openweathermap.org/geo/1.0/direct?q={cityName}&appid={api}";
 
         using var client = new HttpClient();
         _logger.LogInformation("Calling Geocoding API with url: {url}", url);
@@ -37,7 +39,8 @@ public class OpenSolarMapApi : ISolarDataProvider
 
     public string GetCurrent(string cityName)
     {
-        var url = $"http://api.openweathermap.org/geo/1.0/direct?q={cityName}&appid={Api}";
+        var api = _configuration["Api:ServiceApiKey"];
+        var url = $"http://api.openweathermap.org/geo/1.0/direct?q={cityName}&appid={api}";
 
         var client = new WebClient();
 

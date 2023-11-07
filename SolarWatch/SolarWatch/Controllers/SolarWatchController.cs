@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SolarWatch.Data;
 using SolarWatch.Model;
@@ -23,7 +24,7 @@ public class SolarWatchController : ControllerBase
     }
 
 
-    [HttpGet("GetCurrent")]
+    [HttpGet("GetCurrent"), Authorize(Roles="User, Admin")]
     public async Task<ActionResult<SolarWatch>> GetCurrent([Required] string name)
     {
         try

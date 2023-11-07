@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Moq;
 using SolarWatch.Controllers;
 
@@ -9,12 +10,13 @@ public class WeatherDataProviderTests
 {
     private ILogger<OpenSolarMapApi> _logger;
     private ISolarDataProvider _weatherDataProvider;
+    private IConfiguration _configuration;
 
     [SetUp]
     public void Setup()
     {
         _logger = new Mock<ILogger<OpenSolarMapApi>>().Object;
-        _weatherDataProvider = new OpenSolarMapApi(_logger);
+        _weatherDataProvider = new OpenSolarMapApi(_logger, _configuration);
     }
 
     [Test]

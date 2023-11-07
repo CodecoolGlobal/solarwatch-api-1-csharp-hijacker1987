@@ -20,7 +20,7 @@ namespace SolarWatch.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseInMemoryDatabase("SolarWatchApi");
+                optionsBuilder.UseInMemoryDatabase("solarwatch");
             }
         }
     }
