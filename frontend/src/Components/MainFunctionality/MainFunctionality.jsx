@@ -92,7 +92,7 @@ const SolarWatch = ({ onGet, onPost, onDelete, country, onCancel }) => {
 
         <ButtonRowButtonContainer>
           <ButtonContainer type="submit" onClick={() => setAction("get")}>
-            Get country
+            Get city
           </ButtonContainer>
           <ButtonContainer type="button" onClick = { onCancel }>
             Cancel
@@ -116,7 +116,7 @@ const SolarWatch = ({ onGet, onPost, onDelete, country, onCancel }) => {
 
         <ButtonRowButtonContainer>
           <ButtonContainer type="submit" onClick={() => setAction("post")}>
-            Post country
+            Post city
           </ButtonContainer>
           <ButtonContainer type="button" onClick = { onCancel }>
             Cancel
@@ -139,7 +139,7 @@ const SolarWatch = ({ onGet, onPost, onDelete, country, onCancel }) => {
 
         <ButtonRowButtonContainer>
           <ButtonContainer type="submit" onClick={() => setAction("delete")}>
-            Delete country
+            Delete city
           </ButtonContainer>
           <ButtonContainer type="button" onClick = { onCancel }>
             Cancel
