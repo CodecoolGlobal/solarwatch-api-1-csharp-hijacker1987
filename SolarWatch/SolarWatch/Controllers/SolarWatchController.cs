@@ -24,10 +24,43 @@ public class SolarWatchController : ControllerBase
         _solar = solar;
     }
 
+    [HttpGet("Get"), Authorize]
+    public async Task<ActionResult<SunriseSunsetTimes>> GetSunTime(string name)
+    {
+        try
+        {
+            var existingCity = await _context.Cities!.FirstOrDefaultAsync(c => c.Name == name);
+            if (existingCity == null)
+            {
+                _logger.LogInformation($"Data for {name} not exists in the database.");
+                return Ok(existingCity);
+            }
+            
+            var existingSunTime = await _context.Times!.FirstOrDefaultAsync(sunTime => sunTime.CityId == existingCity.Id);
+            if (existingSunTime == null)
+            {
+                return Ok(existingCity);
+            }
+            
+            var result = new {
+                Name = existingCity.Name,
+                SunRiseTime = existingSunTime.SunRiseTime,
+                SunSetTime = existingSunTime.SunSetTime
+            };
+
+            return Ok(result);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error getting sun data");
+            return NotFound("Error getting sun data");
+        }
+    }
 
     [HttpGet("GetCurrent"), Authorize(Roles="User, Admin")]
     public async Task<ActionResult<SolarWatch>> GetCurrent([Required] string name)
     {
+        Console.WriteLine(name);
         try
         {
             var weatherData = await _solar.GetCurrentAsync(name);
@@ -48,7 +81,15 @@ public class SolarWatchController : ControllerBase
             _context.Times!.Add(newSunTime);
             await _context.SaveChangesAsync();
 
-            return Ok($"Name: {city.Name} SunRiseTime: {time.SunRiseTime}, SunSetTime: {time.SunSetTime}");
+            var showCity = new
+                {
+                    Name = city.Name,
+                    SunRiseTime = time.SunRiseTime,
+                    SunSetTime = time.SunSetTime
+                };
+
+            //return Ok($"Name: {city.Name} SunRiseTime: {time.SunRiseTime}, SunSetTime: {time.SunSetTime}");
+            return Ok(showCity);
         }
         catch (Exception e)
         {

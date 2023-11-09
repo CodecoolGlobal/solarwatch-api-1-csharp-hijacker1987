@@ -5,7 +5,7 @@ import Loading from "../Components/Loading/Loading";
 
 const createUser = (user) => {
   console.log(JSON.stringify(user));
-    return fetch("http://localhost:8080/Auth/Register", {
+    return fetch("http://localhost:5127/Auth/Register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

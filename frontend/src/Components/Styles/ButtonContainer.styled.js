@@ -8,7 +8,7 @@ export const ButtonContainer = styled.button`
   background-color: #000;
   display: flex;
   align-items: center;
-  color: white;
+  color: green;
   flex-direction: column;
   justify-content: center;
   border: none;

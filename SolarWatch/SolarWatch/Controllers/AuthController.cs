@@ -45,6 +45,7 @@ public class AuthController : ControllerBase
     [HttpPost("Login")]
     public async Task<ActionResult<AuthResponse>> Authenticate([FromBody] AuthRequest request)
     {
+        Console.WriteLine(request);
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);

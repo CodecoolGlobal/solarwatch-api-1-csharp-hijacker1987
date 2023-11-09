@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 import Loading from "../Components/Loading/Loading";
 
 const postLogin = (user) => {
-    return fetch("http://localhost:5120/Auth/Login", {
+    return fetch("http://localhost:5127/Auth/Login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -20,7 +20,7 @@ const UserLogin = () => {
 
   const handleOnLogin = (user) => {
     setLoading(true);
-  
+    console.log(user);
     postLogin(user)
       .then((data) => {
         setLoading(false);

@@ -6,7 +6,8 @@ import Loading from "../Components/Loading/Loading";
 
 const GetCountry = async (city, token) => {
   try {
-    const response = await fetch(`http://localhost:8080/Sunset-Sunrise/Get?name=${city}`, {
+    console.log(city);
+    const response = await fetch(`http://localhost:5127/SolarWatch/Get?name=${city}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -29,7 +30,7 @@ const GetCountry = async (city, token) => {
 
 const PostCountry = async (city, token) => {
   try {
-    const response = await fetch(`http://localhost:8080/CrudAdmin/Post?name=${city}`, {
+    const response = await fetch(`http://localhost:5127/CrudAdmin/Post?name=${city}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -52,7 +53,7 @@ const PostCountry = async (city, token) => {
 
 const DeleteCountry = async (id, token) => {
   try {
-    const response = await fetch(`http://localhost:8080/CrudAdmin/Delete?id=${id}`, {
+    const response = await fetch(`http://localhost:5127/CrudAdmin/Delete?id=${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -81,7 +82,7 @@ const CountryGet = () => {
     setLoading(true);
   
     const token = getToken();
-  
+    console.log(token);
     GetCountry(city, token)
       .then((data) => {
         setLoading(false);

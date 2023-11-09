@@ -17,11 +17,9 @@ var solarApiKey = builder.Configuration["Api:ServiceApiKey"];
 var iA = builder.Configuration["IssueAudience"];
 var iS = builder.Configuration["IssueSign"];
 var connection = builder.Configuration["ConnectionString"];
-
-Console.WriteLine(connection + "F");
+const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 // Add services to the container.
-
 AddDbContext();
 AddServices();
 AddAppServices();
@@ -49,6 +47,23 @@ if (app.Environment.IsDevelopment())
 app.UseStatusCodePages(MediaTypeNames.Text.Plain, "Status Code Page: {0}");
 
 app.UseHttpsRedirection();
+app.UseRouting();
+
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Add("Access-Control-Allow-Origin", "http://localhost:3000");
+    context.Response.Headers.Add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    context.Response.Headers.Add("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+    if (context.Request.Method == "OPTIONS")
+    {
+        context.Response.StatusCode = 200;
+    }
+    else
+    {
+        await next();
+    }
+});
 
 app.UseAuthentication();
 app.UseAuthorization();

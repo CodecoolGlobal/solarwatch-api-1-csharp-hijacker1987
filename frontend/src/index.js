@@ -12,13 +12,8 @@ import ShowCountry from "./Pages/ShowCountry";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  
-  const checkIfUserIsAuthenticated = () => {
-    return Cookies.get("jwtToken");
-  };
-  
+    
   useEffect(() => {
-    const jwtToken = checkIfUserIsAuthenticated();
     setIsAuthenticated(!isAuthenticated);
   }, []);
 

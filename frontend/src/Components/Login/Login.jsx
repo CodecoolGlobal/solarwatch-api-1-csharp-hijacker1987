@@ -9,14 +9,14 @@ import { InputForm, InputWrapper } from "../Styles/Input.styled";
 const Login = ({ onLogin, user, onCancel }) => {
 
   const [loading, setLoading] = useState(false);
-  const [username, setUsername] = useState(user?.username ?? "");
+  const [email, setEmail] = useState(user?.email ?? "");
   const [password, setPassword] = useState(user?.password ?? "");
 
   const onSubmit = (e) => {
     e.preventDefault();
 
     return onLogin({
-        username,
+        email,
         password
     });
   };
@@ -29,11 +29,11 @@ const Login = ({ onLogin, user, onCancel }) => {
     <Form onSubmit={onSubmit}>
 
       <FormRow>
-        <TextContainer>Username:</TextContainer>
+        <TextContainer>Email:</TextContainer>
         <InputWrapper>
           <InputForm
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             name="username"
             id="username"
             placeholder="Username"
