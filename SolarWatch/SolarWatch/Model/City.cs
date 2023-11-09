@@ -3,11 +3,12 @@ namespace SolarWatch.Model;
 public class City
 {
     public int Id { get; init; }
-    public string? Name { get; private set; }
-    public double Longitude { get; private set; }
-    public double Latitude { get; private set; }
-    public string? State { get; private set; }
-    public string? Country { get; private set; }
+    public string? Name { get; set; }
+    public double Longitude { get; set; }
+    public double Latitude { get; set; }
+    public string? State { get; set; }
+    public string? Country { get; set; }
+    public SunriseSunsetTimes SunriseSunsetTimes { get; set; }
 
     public City(string? name, double longitude, double latitude, string? state, string? country)
     {

@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SolarWatch.Data;
 using SolarWatch.Model;
 
@@ -37,7 +38,7 @@ public class SolarWatchController : ControllerBase
 
             var newCity = new City(city.Name, city.Longitude, city.Latitude, city.State, city.Country);
             
-            _context.Cities.Add(newCity);
+            _context.Cities?.Add(newCity);
             await _context.SaveChangesAsync();
             
             var cityId = newCity.Id;
@@ -54,6 +55,20 @@ public class SolarWatchController : ControllerBase
             _logger.LogError(e, "Error getting sun data");
             return NotFound("Error getting sun data");
         }
+    }
+
+    [HttpGet("GetCityWithSunriseSunsetTimes/{id}")]
+    public async Task<IActionResult> GetCityWithSunriseSunsetTimes(int id)
+    {
+        var existingCity = await _context.Cities!.FirstOrDefaultAsync(city => city.Id == id);
+        var existingSunTime = await _context.Times!.FirstOrDefaultAsync(sunTime => sunTime.CityId == existingCity!.Id);
+        
+        if (existingCity == null)
+        {
+            return NotFound();
+        }
+
+        return Ok($"Name: {existingCity.Name} SunRiseTime: {existingSunTime?.SunRiseTime}, SunSetTime: {existingSunTime?.SunSetTime}");
     }
 
 /*

@@ -16,13 +16,15 @@ public class WeatherDataProviderTests
     public void Setup()
     {
         _logger = new Mock<ILogger<OpenSolarMapApi>>().Object;
+        IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
+        _configuration = configurationBuilder.Build();
         _weatherDataProvider = new OpenSolarMapApi(_logger, _configuration);
     }
-
+    
     [Test]
     public async Task GetCoordinates_ValidCityName_ReturnsNonEmptyString()
     {
-        const string cityName = "New York";
+        const string cityName = "Budapest";
         
         var result = await _weatherDataProvider.GetCurrentAsync(cityName);
         
