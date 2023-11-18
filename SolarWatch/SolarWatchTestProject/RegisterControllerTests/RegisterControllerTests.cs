@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
+using SolarWatch.Contracts;
+using SolarWatch.Controllers;
+using SolarWatch.Service;
 
 namespace SunriseSunsetTest.RegisterControllerTests;
-/*
+
 [TestFixture]
 public class AuthControllerTests
 {
@@ -46,18 +49,18 @@ public class AuthControllerTests
         // Arrange
         var authRequest = new AuthRequest("testuser", "testpassword");
 
-        var authResponse = new AuthResponse(authRequest.UserName, "test@example.com", "testtoken");
-        var authResult = new AuthResult(true, authRequest.UserName, "test@example.com", "testtoken");
+        var authResponse = new AuthResponse(authRequest.Email, "test@example.com", "testtoken");
+        var authResult = new AuthResult(true, authRequest.Email, "test@example.com", "testtoken");
 
-        _mockAuthService.Setup(service => service.LoginAsync(authRequest.UserName, authRequest.Password)).ReturnsAsync(authResult);
+        _mockAuthService.Setup(service => service.LoginAsync(authRequest.Email, authRequest.Password)).ReturnsAsync(authResult);
         
         var result = await _authController.Authenticate(authRequest);
         
         Assert.IsInstanceOf<OkObjectResult>(result.Result);
         var okResult = (OkObjectResult)result.Result;
         var data = (AuthResponse)okResult.Value;
-        Assert.AreEqual(authResponse.Username, data.Username);
         Assert.AreEqual(authResponse.Email, data.Email);
+        Assert.AreEqual(authResponse.UserName, data.UserName);
         Assert.AreEqual(authResponse.Token, data.Token);
     }
-}*/
+}

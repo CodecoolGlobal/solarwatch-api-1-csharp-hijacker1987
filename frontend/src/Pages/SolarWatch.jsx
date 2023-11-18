@@ -115,6 +115,7 @@ const CityGet = () => {
         setLoading(false);
         alert(`There is no City: ${city} in our database!`);
         console.error("Error occurred during login:", error);
+        
         GetCity(city, token)
           .then((data) => {
             setLoading(false);

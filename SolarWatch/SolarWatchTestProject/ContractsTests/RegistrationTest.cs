@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using SolarWatch.Contracts;
 
 namespace SunriseSunsetTest.ContractsTests;
-/*
+
 public class RegistrationTest
 {
     [TestFixture]
@@ -30,4 +31,4 @@ public class RegistrationTest
             Assert.That(isValid, Is.EqualTo(expectedIsValid));
         }
     }
-}*/
+}

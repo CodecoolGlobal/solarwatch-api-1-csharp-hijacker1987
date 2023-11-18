@@ -1,21 +1,24 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SolarWatch.Data;
+using SolarWatch.Model;
+using SolarWatch.Repository;
 using SolarWatchMvp.Repository;
 
 namespace SunriseSunsetTest.RepositoryTests;
-/*
+
 [TestFixture]
 public class CityRepositoryTests
 {
-    private WeatherApiContext _context;
+    private CityApiContext _context;
     private ICityRepository _cityRepository;
 
     [SetUp]
     public void Setup()
     {
-        var options = new DbContextOptionsBuilder<WeatherApiContext>()
+        var options = new DbContextOptionsBuilder<CityApiContext>()
             .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
             .Options;
-        _context = new WeatherApiContext(options);
+        _context = new CityApiContext(options);
         _context.Database.EnsureCreated();
         _cityRepository = new CityRepository(_context);
     }
@@ -87,4 +90,4 @@ public class CityRepositoryTests
         
         Assert.That(_context.Cities?.Count(), Is.EqualTo(0));
     }
-}*/
+}

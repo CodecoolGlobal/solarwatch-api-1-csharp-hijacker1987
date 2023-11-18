@@ -104,12 +104,20 @@ public class SolarWatchController : ControllerBase
         var existingCity = await _context.Cities!.FirstOrDefaultAsync(city => city.Id == id);
         var existingSunTime = await _context.Times!.FirstOrDefaultAsync(sunTime => sunTime.CityId == existingCity!.Id);
         
-        if (existingCity == null)
+        if (existingCity == null || existingSunTime == null)
         {
             return NotFound();
         }
+        
+        var showCity = new
+        {
+            Name = existingCity.Name,
+            SunRiseTime = existingSunTime.SunRiseTime,
+            SunSetTime = existingSunTime.SunSetTime
+        };
 
-        return Ok($"Name: {existingCity.Name} SunRiseTime: {existingSunTime?.SunRiseTime}, SunSetTime: {existingSunTime?.SunSetTime}");
+        //return Ok($"Name: {existingCity.Name} SunRiseTime: {existingSunTime?.SunRiseTime}, SunSetTime: {existingSunTime?.SunSetTime}");
+        return Ok(showCity);
     }
 
 /*

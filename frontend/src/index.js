@@ -8,7 +8,7 @@ import Layout from "./Pages/Layout";
 import UserCreator from "./Pages/UserCreator";
 import Login from "./Pages/Login";
 import SolarWatch from "./Pages/SolarWatch";
-import ShowCountry from "./Pages/ShowCountry";
+import ShowCountry from "./Pages/ShowCity";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
