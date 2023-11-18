@@ -3,9 +3,8 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using SolarWatch.Controllers;
 using SolarWatch.Data;
-using SolarWatch.Model;
 
-namespace SunriseSunsetTest;
+namespace SolarWatchTestProject;
 
 public class Tests
 {
@@ -14,7 +13,7 @@ public class Tests
     private Mock<CityApiContext> _repositoryMock;
     private SolarWatchController _controllerMock;
     private JsonProcessor _jsonProcessor;
-    
+
     [SetUp]
     public void Setup()
     {
@@ -33,7 +32,7 @@ public class Tests
         
         var result = _controllerMock.GetCurrent("Budapest");
         
-        Assert.That(result.Result, Is.InstanceOf(typeof(ActionResult<SolarWatch.SolarWatch>)));
+        Assert.That(result.Result, Is.InstanceOf(typeof(ActionResult<SolarWatch.Model.SolarWatch>)));
         Assert.That(result.IsCompleted);
     }
 }

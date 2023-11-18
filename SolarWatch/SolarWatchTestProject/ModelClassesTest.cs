@@ -1,6 +1,6 @@
 ﻿using SolarWatch.Model;
 
-namespace SunriseSunsetTest;
+namespace SolarWatchTestProject;
 
 [TestFixture]
 public class CityCoordinateTests

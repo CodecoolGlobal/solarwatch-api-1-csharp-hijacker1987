@@ -7,8 +7,6 @@ public class SunriseSunsetTimes
     public string? SunRiseTime { get; set; }
     public string? SunSetTime { get; set; }
     
-    public City City { get; set; }
-
     public SunriseSunsetTimes(string? sunRiseTime, string? sunSetTime)
     {
         SunRiseTime = sunRiseTime;

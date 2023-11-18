@@ -1,16 +1,16 @@
 ﻿using SolarWatch.Controllers;
 
-namespace SunriseSunsetTest;
+namespace SolarWatchTestProject;
 
 [TestFixture]
 public class JsonProcessorTests
 {
-    private JsonProcessor jsonProcessor;
+    private JsonProcessor _jsonProcessor;
 
     [SetUp]
     public void Setup()
     {
-        jsonProcessor = new JsonProcessor();
+        _jsonProcessor = new JsonProcessor();
     }
 
     [Test]
@@ -19,7 +19,7 @@ public class JsonProcessorTests
         const string dataWithOutState = "[{\"name\": \"Budapest\", \"lat\": 40.7128, \"lon\": -74.0060, \"country\": \"HU\"}]";
         const string dataWithState = "[{\"name\": \"Chicago\", \"lat\": 41.8755616, \"lon\": -87.6244212, \"state\": \"Illinois\", \"country\": \"US\"}]";
         
-        var resultWithOutState = jsonProcessor.Process(dataWithOutState);
+        var resultWithOutState = _jsonProcessor.Process(dataWithOutState);
         Assert.Multiple(() =>
         {
             Assert.That(resultWithOutState.Name, Is.EqualTo("Budapest"));
@@ -29,7 +29,7 @@ public class JsonProcessorTests
             Assert.That(resultWithOutState.Country, Is.EqualTo("HU"));
         });
         
-        var resultWithState = jsonProcessor.Process(dataWithState);
+        var resultWithState = _jsonProcessor.Process(dataWithState);
         Assert.Multiple(() =>
         {
             Assert.That(resultWithState.Name, Is.EqualTo("Chicago"));
@@ -45,7 +45,7 @@ public class JsonProcessorTests
     {
         const string data = "{\"results\":{\"sunrise\":\"2023-10-14T06:45:00+00:00\",\"sunset\":\"2023-10-14T18:20:00+00:00\"}}";
         
-        var result = jsonProcessor.SunTimeProcess(data);
+        var result = _jsonProcessor.SunTimeProcess(data);
         Assert.Multiple(() =>
         {
             Assert.That(result.SunRiseTime, Is.EqualTo("2023-10-14T06:45:00+00:00"));

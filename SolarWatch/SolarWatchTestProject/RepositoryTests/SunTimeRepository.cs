@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Globalization;
+using Microsoft.EntityFrameworkCore;
 using SolarWatch.Data;
 using SolarWatch.Model;
 using SolarWatch.Repository;
 
-namespace SunriseSunsetTest.RepositoryTests;
+namespace SolarWatchTestProject.RepositoryTests;
 
 [TestFixture]
 public class SunTimeRepositoryTest
@@ -32,8 +33,8 @@ public class SunTimeRepositoryTest
     [Test]
     public void GetAll_ShouldReturnAllCities()
     {
-        _context.Times?.Add(new SunriseSunsetTimes(19.02.ToString(), 19.02.ToString()));
-        _context.Times?.Add(new SunriseSunsetTimes(19.03.ToString(), 19.03.ToString()));
+        _context.Times?.Add(new SunriseSunsetTimes(19.02.ToString(CultureInfo.InvariantCulture), 19.02.ToString(CultureInfo.InvariantCulture)));
+        _context.Times?.Add(new SunriseSunsetTimes(19.03.ToString(CultureInfo.InvariantCulture), 19.03.ToString(CultureInfo.InvariantCulture)));
         _context.SaveChanges();
         
         var result = _sunTimeRepository.GetAll();
@@ -44,7 +45,7 @@ public class SunTimeRepositoryTest
     [Test]
     public void GetByName_ShouldReturnCity_WhenCityExists()
     {
-        _context.Times?.Add(new SunriseSunsetTimes(19.02.ToString(), 19.02.ToString()) {Id = 1});
+        _context.Times?.Add(new SunriseSunsetTimes(19.02.ToString(CultureInfo.InvariantCulture), 19.02.ToString(CultureInfo.InvariantCulture)) {Id = 1});
         _context.SaveChanges();
         
         var result = _sunTimeRepository.GetByName(1);
@@ -56,7 +57,7 @@ public class SunTimeRepositoryTest
     [Test]
     public void Add_ShouldAddCity_WhenValidCityIsProvided()
     {
-        var sunTime = new SunriseSunsetTimes(19.02.ToString(), 19.02.ToString()) { Id = 1 };
+        var sunTime = new SunriseSunsetTimes(19.02.ToString(CultureInfo.InvariantCulture), 19.02.ToString(CultureInfo.InvariantCulture)) { Id = 1 };
 
         _sunTimeRepository.Add(sunTime);
         _context.SaveChanges();
@@ -67,10 +68,10 @@ public class SunTimeRepositoryTest
     [Test]
     public void Update_ShouldAddCity_WhenValidCityIsProvided()
     {
-        var sunTime = new SunriseSunsetTimes(19.02.ToString(), 19.02.ToString()) { Id = 1 };
+        var sunTime = new SunriseSunsetTimes(19.02.ToString(CultureInfo.InvariantCulture), 19.02.ToString(CultureInfo.InvariantCulture)) { Id = 1 };
         _sunTimeRepository.Add(sunTime);
         _context.SaveChanges();
-        var updatedSunTime = new SunriseSunsetTimes(19.08.ToString(), 19.07.ToString());
+        var updatedSunTime = new SunriseSunsetTimes(19.08.ToString(CultureInfo.InvariantCulture), 19.07.ToString(CultureInfo.InvariantCulture));
 
         _sunTimeRepository.Update(updatedSunTime);
         _context.SaveChanges();
@@ -81,7 +82,7 @@ public class SunTimeRepositoryTest
     [Test]
     public void Delete_ShouldRemoveCity_WhenValidCityIsProvided()
     {
-        var sunTime = new SunriseSunsetTimes(19.02.ToString(), 19.02.ToString()) { Id = 1 };
+        var sunTime = new SunriseSunsetTimes(19.02.ToString(CultureInfo.InvariantCulture), 19.02.ToString(CultureInfo.InvariantCulture)) { Id = 1 };
         _context.Times?.Add(sunTime);
         _context.SaveChanges();
         

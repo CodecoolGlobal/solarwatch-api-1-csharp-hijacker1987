@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using SolarWatch.Controllers;
 
-namespace SunriseSunsetTest;
+namespace SolarWatchTestProject;
 
 [TestFixture]
 public class WeatherDataProviderTests

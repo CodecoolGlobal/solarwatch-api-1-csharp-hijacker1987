@@ -1,8 +1,7 @@
 using SolarWatch.Data;
 using SolarWatch.Model;
-using SolarWatch.Repository;
 
-namespace SolarWatchMvp.Repository;
+namespace SolarWatch.Repository;
 
 public class CityRepository : ICityRepository
 {

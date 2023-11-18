@@ -1,14 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using SolarWatch.Contracts;
 
-namespace SunriseSunsetTest.ContractsTests;
+namespace SolarWatchTestProject.ContractsTests;
 
 public class RegistrationTest
 {
     [TestFixture]
     public class RegistrationResponseTests
     {
-        [TestCase("test@example.com", "testuser", "Test@123", true)]
+        [TestCase("test@example.com", "testUser", "Test@123", true)]
         public void Test_RegistrationResponse_Properties(string email, string username, string password, bool expectedIsValid)
         {
             var registrationResponse = new RegistrationResponse(email, username);
@@ -19,12 +19,12 @@ public class RegistrationTest
             });
         }
 
-        [TestCase("test@example.com", "testuser", "Test@123", true)]
+        [TestCase("test@example.com", "testUser", "Test@123", true)]
         public void Test_RegistrationRequest_Validation(string email, string username, string password, bool expectedIsValid)
         {
             var registrationRequest = new RegistrationRequest(email, username, password);
             var context = new ValidationContext(registrationRequest, serviceProvider: null, items: null);
-            var results = new System.Collections.Generic.List<ValidationResult>();
+            var results = new List<ValidationResult>();
             
             var isValid = Validator.TryValidateObject(registrationRequest, context, results, validateAllProperties: true);
             

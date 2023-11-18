@@ -10,14 +10,13 @@ using SolarWatch.Data;
 using SolarWatch.Repository;
 using SolarWatch.Service;
 using SolarWatch.Service.Authentication;
-using SolarWatchMvp.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 var solarApiKey = builder.Configuration["Api:ServiceApiKey"];
 var iA = builder.Configuration["IssueAudience"];
 var iS = builder.Configuration["IssueSign"];
 var connection = builder.Configuration["ConnectionString"];
-const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
+var adminRoleName = builder.Configuration["Roles:Admin"];
 
 // Add services to the container.
 AddDbContext();
@@ -41,7 +40,7 @@ if (app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
-//Docker run command: docker run -d -p 8080:80 -e ASPNETCORE_ENVIRONMENT=Development solarwatchapp
+//Docker run command: docker run -d -p 8080:80 -e ASPNETCORE_ENVIRONMENT=Development solarwatch
 
 // using static System.Net.Mime.MediaTypeNames;
 app.UseStatusCodePages(MediaTypeNames.Text.Plain, "Status Code Page: {0}");
@@ -104,7 +103,7 @@ void AddServices()
                 ValidIssuer = iA,
                 ValidAudience = iA,
                 IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(iS)
+                    Encoding.UTF8.GetBytes(iS!)
                 ),
             };
         });
@@ -176,12 +175,12 @@ void AddRoles()
 
 async Task CreateAdminRole(RoleManager<IdentityRole> roleManager)
 {
-    await roleManager.CreateAsync(new IdentityRole("Admin")); //The role string should better be stored as a constant or a value in appsettings
+    await roleManager.CreateAsync(new IdentityRole(adminRoleName!)); //value in appsettings
 }
 
 async Task CreateUserRole(RoleManager<IdentityRole> roleManager)
 {
-    await roleManager.CreateAsync(new IdentityRole("User")); //The role string should better be stored as a constant or a value in appsettings
+    await roleManager.CreateAsync(new IdentityRole(adminRoleName!)); //value in appsettings
 }
 
 void AddAdmin()

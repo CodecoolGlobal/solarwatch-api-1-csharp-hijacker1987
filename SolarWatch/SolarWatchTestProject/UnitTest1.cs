@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using SolarWatch.Controllers;
 using SolarWatch.Data;
-using SolarWatch.Model;
 
 namespace SolarWatchTestProject;
 
@@ -30,7 +29,6 @@ public class WeatherForecastControllerTests
     public async Task GetCurrentReturnsNotFoundResultIfWeatherDataProviderFails()
     {
         // Arrange
-        var solarData = "{}";
         _weatherDataProviderMock.Setup(x => x.GetCurrentAsync(It.IsAny<float>(), It.IsAny<float>())).Throws(new Exception());
 
         // Act
@@ -78,7 +76,7 @@ public class WeatherForecastControllerTests
         
         var result = _controller.GetCurrent("Budapest");
         
-        Assert.That(result.Result, Is.InstanceOf(typeof(ActionResult<SolarWatch.SolarWatch>)));
+        Assert.That(result.Result, Is.InstanceOf(typeof(ActionResult<SolarWatch.Model.SolarWatch>)));
         Assert.That(result.IsCompleted);
     }
 }

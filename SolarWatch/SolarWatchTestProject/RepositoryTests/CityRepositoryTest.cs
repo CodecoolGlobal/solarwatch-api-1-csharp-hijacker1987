@@ -2,9 +2,8 @@
 using SolarWatch.Data;
 using SolarWatch.Model;
 using SolarWatch.Repository;
-using SolarWatchMvp.Repository;
 
-namespace SunriseSunsetTest.RepositoryTests;
+namespace SolarWatchTestProject.RepositoryTests;
 
 [TestFixture]
 public class CityRepositoryTests

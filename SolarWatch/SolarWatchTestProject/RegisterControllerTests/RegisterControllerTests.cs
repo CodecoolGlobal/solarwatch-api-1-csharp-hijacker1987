@@ -4,7 +4,7 @@ using SolarWatch.Contracts;
 using SolarWatch.Controllers;
 using SolarWatch.Service;
 
-namespace SunriseSunsetTest.RegisterControllerTests;
+namespace SolarWatchTestProject.RegisterControllerTests;
 
 [TestFixture]
 public class AuthControllerTests
@@ -36,11 +36,11 @@ public class AuthControllerTests
         var result = await _authController.Register(registrationRequest);
         
         Assert.IsInstanceOf<CreatedAtActionResult>(result.Result);
-        var createdResult = (CreatedAtActionResult)result.Result;
-        Assert.AreEqual("Register", createdResult.ActionName);
-        var data = (RegistrationResponse)createdResult.Value;
-        Assert.AreEqual(registrationResponse.Email, data.Email);
-        Assert.AreEqual(registrationResponse.UserName, data.UserName);
+        var createdResult = (CreatedAtActionResult)result.Result!;
+        Assert.That(createdResult?.ActionName, Is.EqualTo("Register"));
+        var data = (RegistrationResponse)createdResult!.Value!;
+        Assert.That(data.Email, Is.EqualTo(registrationResponse.Email));
+        Assert.That(data.UserName, Is.EqualTo(registrationResponse.UserName));
     }
 
     [Test]
@@ -57,10 +57,10 @@ public class AuthControllerTests
         var result = await _authController.Authenticate(authRequest);
         
         Assert.IsInstanceOf<OkObjectResult>(result.Result);
-        var okResult = (OkObjectResult)result.Result;
-        var data = (AuthResponse)okResult.Value;
-        Assert.AreEqual(authResponse.Email, data.Email);
-        Assert.AreEqual(authResponse.UserName, data.UserName);
-        Assert.AreEqual(authResponse.Token, data.Token);
+        var okResult = (OkObjectResult)result!.Result!;
+        var data = (AuthResponse)okResult!.Value!;
+        Assert.That(data?.Email, Is.EqualTo(authResponse.Email));
+        Assert.That(data?.UserName, Is.EqualTo(authResponse.UserName));
+        Assert.That(data?.Token, Is.EqualTo(authResponse.Token));
     }
 }

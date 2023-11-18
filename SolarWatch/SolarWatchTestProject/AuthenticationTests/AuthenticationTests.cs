@@ -1,6 +1,6 @@
 ﻿using SolarWatch.Service;
 
-namespace SolarWatchMvp.Tests;
+namespace SolarWatchTestProject.AuthenticationTests;
     
 [TestFixture]
 public class AuthResultTests

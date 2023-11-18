@@ -1,4 +1,3 @@
-using System.Collections.Immutable;
 using System.Net;
 
 namespace SolarWatch.Controllers;
@@ -37,6 +36,7 @@ public class OpenSolarMapApi : ISolarDataProvider
         return await response.Content.ReadAsStringAsync();
     }
 
+    [Obsolete("Obsolete")]
     public string GetCurrent(string cityName)
     {
         var api = _configuration["Api:ServiceApiKey"];
@@ -48,6 +48,7 @@ public class OpenSolarMapApi : ISolarDataProvider
         return client.DownloadString(url);
     }
     
+    [Obsolete("Obsolete")]
     public string GetCurrent(float lat, float lon)
     {
         var url = $"https://api.sunrise-sunset.org/json?lat={lat}&lng={lon}";

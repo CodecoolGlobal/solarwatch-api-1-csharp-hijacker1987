@@ -24,7 +24,7 @@ public class SolarWatchController : ControllerBase
         _solar = solar;
     }
 
-    [HttpGet("Get"), Authorize]
+    [HttpGet("Get"), Authorize(Roles="User")]
     public async Task<ActionResult<SunriseSunsetTimes>> GetSunTime(string name)
     {
         try
@@ -58,7 +58,7 @@ public class SolarWatchController : ControllerBase
     }
 
     [HttpGet("GetCurrent"), Authorize(Roles="User, Admin")]
-    public async Task<ActionResult<SolarWatch>> GetCurrent([Required] string name)
+    public async Task<ActionResult<Model.SolarWatch>> GetCurrent([Required] string name)
     {
         Console.WriteLine(name);
         try
@@ -98,7 +98,7 @@ public class SolarWatchController : ControllerBase
         }
     }
 
-    [HttpGet("GetCityWithSunriseSunsetTimes/{id}")]
+    [HttpGet("GetCityWithSunriseSunsetTimes/{id}"), Authorize(Roles="User")]
     public async Task<IActionResult> GetCityWithSunriseSunsetTimes(int id)
     {
         var existingCity = await _context.Cities!.FirstOrDefaultAsync(city => city.Id == id);
@@ -119,33 +119,4 @@ public class SolarWatchController : ControllerBase
         //return Ok($"Name: {existingCity.Name} SunRiseTime: {existingSunTime?.SunRiseTime}, SunSetTime: {existingSunTime?.SunSetTime}");
         return Ok(showCity);
     }
-
-/*
-[HttpGet("GetCurrent")]
-public ActionResult<SolarWatch> GetCurrent([Required]string city)
-{
-    try
-    {
-        var cityData = _solarDataProvider.GetCurrent(city);
-        var availableCityData = _jsonProcessor.Process(cityData, true);
-
-        var solarData = _solarDataProvider.GetCurrent(availableCityData.Latitude, availableCityData.Longitude);
-        var availableSolarData = _jsonProcessor.Process(solarData, false);
-
-        return new SolarWatch
-        {
-            City = availableCityData.City,
-            Latitude = availableCityData.Latitude,
-            Longitude = availableCityData.Longitude,
-            Sunrise = availableSolarData.Sunrise,
-            Sunset = availableSolarData.Sunset
-        };
-    }
-    catch (Exception e)
-    {
-        _logger.LogError(e, "Error getting solar data");
-        return NotFound("Error getting solar data");
-    }
-}
-*/
 }

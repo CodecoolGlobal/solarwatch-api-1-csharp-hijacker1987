@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SolarWatch.Controllers;
 using SolarWatch.Data;
 using SolarWatch.Model;
 
-namespace SolarWatchMvp.Controllers;
+namespace SolarWatch.Controllers;
 
 [ApiController]
 [Route("[controller]")]
@@ -79,13 +78,19 @@ public class CrudAdminController : ControllerBase
     {
         try
         {
+            if (_repository.Cities == null || _repository.Times == null)
+            {
+                _logger.LogError("Cities or Times is null in the repository.");
+                return NotFound();
+            }
+
             var existingCity = await _repository.Cities!.FirstOrDefaultAsync(city => city.Id == id);
             if (existingCity == null)
             {
-                _logger.LogInformation($"Data for id: {id} doesnt't exists in the database.");
+                _logger.LogInformation($"Data for id: {id} doesn't exist in the database.");
                 return Ok(existingCity);
             }
-            
+        
             var existingSunTime = await _repository.Times!.FirstOrDefaultAsync(sunTime => sunTime.CityId == existingCity.Id);
             if (existingSunTime == null)
             {
@@ -100,8 +105,8 @@ public class CrudAdminController : ControllerBase
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            throw;
+            _logger.LogError(e, "Error during delete operation");
+            return StatusCode(500, "Internal Server Error");
         }
     }
 
@@ -110,7 +115,7 @@ public class CrudAdminController : ControllerBase
     {
         try
         {
-            var existingCity = await _repository.Cities.FirstOrDefaultAsync(c => c.Name == name);
+            var existingCity = await _repository.Cities!.FirstOrDefaultAsync(c => c.Name == name);
             if (existingCity != null)
             {
                 _logger.LogInformation($"Data for {name} already exists in the database.");
@@ -125,7 +130,7 @@ public class CrudAdminController : ControllerBase
 
             var newCity = new City(city.Name, city.Longitude, city.Latitude, city.State, city.Country);
             
-            _repository.Cities.Add(newCity);
+            _repository.Cities?.Add(newCity);
             await _repository.SaveChangesAsync();
             
             var cityId = newCity.Id;
