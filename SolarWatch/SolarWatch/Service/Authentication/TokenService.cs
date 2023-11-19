@@ -49,8 +49,8 @@ public class TokenService : ITokenService
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)),
                 new(ClaimTypes.NameIdentifier, user.Id),
-                new(ClaimTypes.Name, user.UserName),
-                new(ClaimTypes.Email, user.Email),
+                new(ClaimTypes.Name, user.UserName!),
+                new(ClaimTypes.Email, user.Email!),
             };
 
             if (role != null)
@@ -69,7 +69,7 @@ public class TokenService : ITokenService
 
     private SigningCredentials CreateSigningCredentials()
     {
-        string key = _configuration["IssueSign"];
+        string key = _configuration["IssueSign"]!;
         return new SigningCredentials(
             new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
             SecurityAlgorithms.HmacSha256

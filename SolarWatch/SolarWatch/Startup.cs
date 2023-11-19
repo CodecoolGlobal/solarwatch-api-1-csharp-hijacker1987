@@ -137,6 +137,12 @@ public class Startup
 
         app.UseAuthentication();
         app.UseAuthorization();
+
+        if (env.IsEnvironment("Test"))
+        {
+            await usersContext.Database.EnsureCreatedAsync();
+            await usersContext.Database.MigrateAsync(); 
+        }
         
         var solarApiKey = _configuration["Api:ServiceApiKey"];
         
@@ -146,11 +152,6 @@ public class Startup
             endpoints.MapGet("/", () => solarApiKey);
         });
         
-        if (env.IsEnvironment("Test"))
-        {
-            await usersContext.Database.EnsureCreatedAsync();
-            await usersContext.Database.MigrateAsync(); 
-        }
         await AddRoles(app);        
     }
     
