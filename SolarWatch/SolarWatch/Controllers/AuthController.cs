@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SolarWatch.Contracts;
+using SolarWatch.Data;
+using SolarWatch.Model;
 using SolarWatch.Service;
 
 namespace SolarWatch.Controllers;
@@ -9,10 +11,12 @@ namespace SolarWatch.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
+    private readonly UsersContext? _usersContext;
 
-    public AuthController(IAuthService authenticationService)
+    public AuthController(IAuthService authenticationService, UsersContext usersContext)
     {
         _authService = authenticationService;
+        _usersContext = usersContext;
     }
 
     [HttpPost("Register")]
@@ -30,6 +34,11 @@ public class AuthController : ControllerBase
             AddErrors(result);
             return BadRequest(ModelState);
         }
+
+        var newUser = new User(request.Username, request.Email, request.Password, result.Id);
+        
+        _usersContext!.UsersDb!.Add(newUser);
+        await _usersContext.SaveChangesAsync();
 
         return CreatedAtAction(nameof(Register), new RegistrationResponse(result.Email, result.UserName));
     }

@@ -5,9 +5,9 @@ namespace SolarWatch.Repository;
 
 public class CityRepository : ICityRepository
 {
-    private readonly CityApiContext? _context;
+    private readonly UsersContext? _context;
 
-    public CityRepository(CityApiContext context)
+    public CityRepository(UsersContext context)
     {
         _context = context;
     }

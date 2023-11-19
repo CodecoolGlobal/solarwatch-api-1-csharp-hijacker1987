@@ -11,7 +11,7 @@ public class AdminControllerTests
 {
     private Mock<ILogger<SolarWatchController>> _loggerMock;
     private Mock<ISolarDataProvider> _weatherDataProviderMock;
-    private Mock<CityApiContext> _repositoryMock;
+    private Mock<UsersContext> _repositoryMock;
     private Mock<IJsonProcessor> _jsonProcessorMock;
     private CrudAdminController _controllerMock;
 
@@ -20,7 +20,7 @@ public class AdminControllerTests
     {
         _loggerMock = new Mock<ILogger<SolarWatchController>>();
         _weatherDataProviderMock = new Mock<ISolarDataProvider>();
-        _repositoryMock = new Mock<CityApiContext>();
+        _repositoryMock = new Mock<UsersContext>();
         _jsonProcessorMock = new Mock<IJsonProcessor>();
         _controllerMock = new CrudAdminController(_loggerMock.Object, _weatherDataProviderMock.Object, _jsonProcessorMock.Object, _repositoryMock.Object);
     }

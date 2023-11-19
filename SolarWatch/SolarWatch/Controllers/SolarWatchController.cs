@@ -13,10 +13,10 @@ public class SolarWatchController : ControllerBase
 {
     private readonly ILogger<SolarWatchController> _logger;
     private readonly IJsonProcessor _jsonProcessor;
-    private readonly CityApiContext _context;
+    private readonly UsersContext _context;
     private readonly ISolarDataProvider _solar;
 
-    public SolarWatchController(ILogger<SolarWatchController> logger, CityApiContext context, IJsonProcessor jsonProcessor, ISolarDataProvider solar)
+    public SolarWatchController(ILogger<SolarWatchController> logger, UsersContext context, IJsonProcessor jsonProcessor, ISolarDataProvider solar)
     {
         _logger = logger;
         _context = context;
@@ -98,17 +98,23 @@ public class SolarWatchController : ControllerBase
         }
     }
 
-    [HttpGet("GetCityWithSunriseSunsetTimes/{id}"), Authorize(Roles="User")]
+    [HttpGet("GetCityWithSunriseSunsetTimes/{id}"), Authorize(Roles = "User")]
     public async Task<IActionResult> GetCityWithSunriseSunsetTimes(int id)
     {
         var existingCity = await _context.Cities!.FirstOrDefaultAsync(city => city.Id == id);
-        var existingSunTime = await _context.Times!.FirstOrDefaultAsync(sunTime => sunTime.CityId == existingCity!.Id);
-        
-        if (existingCity == null || existingSunTime == null)
+    
+        if (existingCity == null)
         {
-            return NotFound();
+            return NotFound("City not found");
         }
-        
+
+        var existingSunTime = await _context.Times!.FirstOrDefaultAsync(sunTime => sunTime.CityId == existingCity.Id);
+
+        if (existingSunTime == null)
+        {
+            return NotFound("SunTime not found for the city");
+        }
+
         var showCity = new
         {
             Name = existingCity.Name,

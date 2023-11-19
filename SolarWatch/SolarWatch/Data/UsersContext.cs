@@ -1,17 +1,21 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SolarWatch.Model;
 
 namespace SolarWatch.Data;
 
-public class UserContext : IdentityDbContext<IdentityUser, IdentityRole, string>
+public class UsersContext : IdentityDbContext<IdentityUser, IdentityRole, string>
 {
-    public UserContext (DbContextOptions<UserContext> options)
+    public DbSet<User>? UsersDb { get; set; }
+    public DbSet<City>? Cities { get; set; }
+    public DbSet<SunriseSunsetTimes>? Times { get; set; }
+    public UsersContext (DbContextOptions<UsersContext> options)
         : base(options)
     {
     }
     
-    public UserContext ()
+    public UsersContext ()
     {
     }
     

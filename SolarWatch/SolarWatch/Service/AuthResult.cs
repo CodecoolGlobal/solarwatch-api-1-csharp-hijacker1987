@@ -1,9 +1,10 @@
 namespace SolarWatch.Service;
 
 public record AuthResult(
+    string Id,
     bool Success,
-    string Email,
     string UserName,
+    string Email,
     string Token)
 {
     //Error code - error message

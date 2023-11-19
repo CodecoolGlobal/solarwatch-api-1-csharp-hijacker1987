@@ -13,7 +13,7 @@ public class WeatherForecastControllerTests
     private Mock<ISolarDataProvider> _weatherDataProviderMock;
     private Mock<IJsonProcessor> _jsonProcessorMock;
     private SolarWatchController _controller;
-    private Mock<CityApiContext> _repositoryMock;
+    private Mock<UsersContext> _repositoryMock;
     
     [SetUp]
     public void SetUp()
@@ -21,11 +21,13 @@ public class WeatherForecastControllerTests
         _loggerMock = new Mock<ILogger<SolarWatchController>>();
         _weatherDataProviderMock = new Mock<ISolarDataProvider>();
         _jsonProcessorMock = new Mock<IJsonProcessor>();
-        _repositoryMock = new Mock<CityApiContext>();
+        _repositoryMock = new Mock<UsersContext>();
         _controller = new SolarWatchController(_loggerMock.Object,  _repositoryMock.Object, _jsonProcessorMock.Object, _weatherDataProviderMock.Object);
     }
     
+#pragma warning disable NUnit1007
     [Test]
+#pragma warning restore NUnit1007
     public async Task GetCurrentReturnsNotFoundResultIfWeatherDataProviderFails()
     {
         // Arrange
@@ -38,7 +40,9 @@ public class WeatherForecastControllerTests
         Assert.IsInstanceOf(typeof(NotFoundObjectResult), result.Result);
     }
 
+#pragma warning disable NUnit1007
     [Test]
+#pragma warning restore NUnit1007
     public async Task GetCurrentReturnsNotFoundResultIfSolarDataIsInvalid()
     {
         // Arrange
@@ -53,7 +57,9 @@ public class WeatherForecastControllerTests
         Assert.IsInstanceOf(typeof(NotFoundObjectResult), result.Result);
     }
     
+#pragma warning disable NUnit1007
     [Test]
+#pragma warning restore NUnit1007
     public async Task GetCurrentAsyncReturnsNotFoundResultIfSolarDataIsInvalid()
     {
         // Arrange

@@ -6,9 +6,9 @@ namespace SolarWatch.Repository;
 public class SunTimeRepository : ISunTimeRepository
 {
     
-    private readonly CityApiContext _context;
+    private readonly UsersContext _context;
 
-    public SunTimeRepository(CityApiContext context)
+    public SunTimeRepository(UsersContext context)
     {
         _context = context;
     }

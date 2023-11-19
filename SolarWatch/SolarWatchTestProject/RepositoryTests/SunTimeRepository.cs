@@ -9,16 +9,16 @@ namespace SolarWatchTestProject.RepositoryTests;
 [TestFixture]
 public class SunTimeRepositoryTest
 {
-    private CityApiContext _context;
+    private UsersContext _context;
     private ISunTimeRepository _sunTimeRepository;
 
     [SetUp]
     public void Setup()
     {
-        var options = new DbContextOptionsBuilder<CityApiContext>()
+        var options = new DbContextOptionsBuilder<UsersContext>()
             .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
             .Options;
-        _context = new CityApiContext(options);
+        _context = new UsersContext(options);
         _context.Database.EnsureCreated();
         _sunTimeRepository = new SunTimeRepository(_context);
     }

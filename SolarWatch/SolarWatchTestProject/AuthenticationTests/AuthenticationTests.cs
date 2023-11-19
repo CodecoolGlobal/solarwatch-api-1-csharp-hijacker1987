@@ -8,6 +8,7 @@ public class AuthResultTests
     [Test]
     public void AuthResult_Initialization_Success()
     {
+        var id = "1";
         var success = true;
         var email = "test@example.com";
         var userName = "testuser";
@@ -18,7 +19,7 @@ public class AuthResultTests
             { "Error2", "Error message 2" }
         };
 
-        var authResult = new AuthResult(success, email, userName, token);
+        var authResult = new AuthResult(id, success, email, userName, token);
         Assert.Multiple(() =>
         {
             Assert.That(authResult.Success, Is.EqualTo(success));

@@ -13,9 +13,9 @@ public class CrudAdminController : ControllerBase
     private readonly ILogger<SolarWatchController> _logger;
     private readonly ISolarDataProvider _weatherDataProvider;
     private readonly IJsonProcessor _jsonProcessor;
-    private readonly CityApiContext _repository;
+    private readonly UsersContext _repository;
 
-    public CrudAdminController(ILogger<SolarWatchController> logger, ISolarDataProvider weatherDataProvider, IJsonProcessor jsonProcessor, CityApiContext cityApiContext)
+    public CrudAdminController(ILogger<SolarWatchController> logger, ISolarDataProvider weatherDataProvider, IJsonProcessor jsonProcessor, UsersContext cityApiContext)
     {
         _logger = logger;
         _weatherDataProvider = weatherDataProvider;

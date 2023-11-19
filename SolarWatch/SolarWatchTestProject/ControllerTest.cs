@@ -10,7 +10,7 @@ public class Tests
 {
     private Mock<ILogger<SolarWatchController>> _loggerMock;
     private Mock<ISolarDataProvider> _weatherDataProviderMock;
-    private Mock<CityApiContext> _repositoryMock;
+    private Mock<UsersContext> _repositoryMock;
     private SolarWatchController _controllerMock;
     private JsonProcessor _jsonProcessor;
 
@@ -19,7 +19,7 @@ public class Tests
     {
         _loggerMock = new Mock<ILogger<SolarWatchController>>();
         _weatherDataProviderMock = new Mock<ISolarDataProvider>();
-        _repositoryMock = new Mock<CityApiContext>();
+        _repositoryMock = new Mock<UsersContext>();
         _jsonProcessor = new JsonProcessor();
         _controllerMock = new SolarWatchController(_loggerMock.Object, _repositoryMock.Object, _jsonProcessor, _weatherDataProviderMock.Object);
     }

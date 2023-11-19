@@ -21,7 +21,9 @@ public class WeatherDataProviderTests
         _weatherDataProvider = new OpenSolarMapApi(_logger, _configuration);
     }
     
+#pragma warning disable NUnit1007
     [Test]
+#pragma warning restore NUnit1007
     public async Task GetCoordinates_ValidCityName_ReturnsNonEmptyString()
     {
         const string cityName = "Budapest";
@@ -31,7 +33,9 @@ public class WeatherDataProviderTests
         Assert.That(result, Is.Not.Empty, "Result should not be empty.");
     }
     
+#pragma warning disable NUnit1007
     [Test]
+#pragma warning restore NUnit1007
     public async Task GetSunTime_ValidCityName_ReturnsNonEmptyString()
     {
         const double lat = 12.1;
