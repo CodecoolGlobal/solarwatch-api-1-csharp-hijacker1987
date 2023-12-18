@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SolarWatch.Contracts;
 using SolarWatch.Data;
@@ -12,11 +13,13 @@ public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
     private readonly UsersContext? _usersContext;
+    private readonly UserManager<IdentityUser> _userManager;
 
-    public AuthController(IAuthService authenticationService, UsersContext usersContext)
+    public AuthController(IAuthService authenticationService, UsersContext usersContext, UserManager<IdentityUser> userManager)
     {
         _authService = authenticationService;
         _usersContext = usersContext;
+        _userManager = userManager;
     }
 
     [HttpPost("Register")]
@@ -69,5 +72,37 @@ public class AuthController : ControllerBase
         }
 
         return Ok(new AuthResponse(result.Email, result.UserName, result.Token));
+    }
+    
+    [HttpPatch("ChangePassword")]
+    public async Task<ActionResult<ChangePasswordResponse>> ChangePassword([FromBody] ChangePasswordRequest request)
+    {
+        try
+        {
+            var existingUser = await _userManager.FindByEmailAsync(request.Email);
+            if (existingUser == null)
+            {
+                return BadRequest(existingUser);
+            }
+
+            var result = await _userManager.ChangePasswordAsync(existingUser, request.CurrentPassword, request.NewPassword);
+
+            await _usersContext.SaveChangesAsync();
+
+            if (result.Succeeded)
+            {
+                await _usersContext.SaveChangesAsync();
+                return Ok($"Successful pass change {request.Email}");
+            }
+            else
+            {
+                return BadRequest($"Error pass change {request.Email}");
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return NotFound("Error delete sun data");
+        }
     }
 }

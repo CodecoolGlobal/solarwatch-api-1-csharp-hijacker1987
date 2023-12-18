@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using SolarWatch.Contracts;
@@ -14,6 +15,7 @@ public class AuthControllerTests
     private AuthController _authController;
     private Mock<IAuthService> _mockAuthService;
     private UsersContext _usersContext;
+    private UserManager<IdentityUser> _userManager;
 
     [SetUp]
     public void Setup()
@@ -26,7 +28,7 @@ public class AuthControllerTests
             .Options;
 
         _usersContext = new UsersContext(options);
-        _authController = new AuthController(_mockAuthService.Object, _usersContext);
+        _authController = new AuthController(_mockAuthService.Object, _usersContext, _userManager);
     }
 
 #pragma warning disable NUnit1007

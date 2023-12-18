@@ -1,7 +1,7 @@
 using System.Text.Json;
-using SolarWatch.Model;
+using SW_MVC.Models;
 
-namespace SolarWatch.Controllers;
+namespace SW_MVC.Utility;
 
 public class JsonProcessor : IJsonProcessor
 {
