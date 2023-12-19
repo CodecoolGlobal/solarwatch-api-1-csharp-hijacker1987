@@ -32,7 +32,7 @@ app.UseEndpoints(endpoints =>
         pattern: "{controller=Home}/{action=Index}/{id?}");
     endpoints.MapControllerRoute(
         name: "sw",
-        pattern: "SW/{action=GetCityWithSunriseSunsetTimes}/{lat}-{lon}",
+        pattern: "SW/{action=GetCityWithSunriseSunsetTimes}/{name}",
         defaults: new { controller = "SW" });
 });
 

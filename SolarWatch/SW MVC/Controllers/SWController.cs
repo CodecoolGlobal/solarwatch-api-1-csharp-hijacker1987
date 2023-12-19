@@ -16,26 +16,24 @@ public class SWController : Controller
         _logger = logger;
     }
 
-    [HttpGet("GetCityWithSunriseSunsetTimes/{lat}-{lon}")]
-    public async Task<IActionResult> GetCityWithSunriseSunsetTimes(double lat, double lon)
+    [HttpGet("GetCityWithSunriseSunsetTimes/{name}")]
+    public async Task<IActionResult> GetCityWithSunriseSunsetTimes(string name)
     {
         try
         {
-            var existingCity = await _solar.GetCurrentAsync(lat, lon);
-            var weatherData = await _solar.GetCurrentAsync(existingCity);
+            var weatherData = await _solar.GetCurrentAsync(name);
             var city = _jsonProcessor.Process(weatherData);
+            _logger.LogInformation(city.ToString());
 
             var sunsetSunrise = await _solar.GetCurrentAsync(city.Latitude, city.Longitude);
             var time = _jsonProcessor.SunTimeProcess(sunsetSunrise);
+            _logger.LogInformation(sunsetSunrise);
 
-            var showCity = new
-            {
-                Name = city.Name,
-                SunRiseTime = time.SunRiseTime,
-                SunSetTime = time.SunSetTime
-            };
+            ViewBag.Name = city.Name;
+            ViewBag.SunRiseTime = time.SunRiseTime;
+            ViewBag.SunSetTime = time.SunSetTime;
 
-            return Ok(showCity);
+            return View();
         }
         catch (Exception e)
         {
@@ -43,5 +41,4 @@ public class SWController : Controller
             return StatusCode(500, "Internal Server Error");
         }
     }
-
 }

@@ -18,13 +18,4 @@ public class City
         State = state;
         Country = country;
     }
-
-    public void ChangeCityData(string name, double longitude, double latitude, string state, string county)
-    {
-        Name = name;
-        Longitude = longitude;
-        Latitude = latitude;
-        State = state;
-        Country = county;
-    }
 }
