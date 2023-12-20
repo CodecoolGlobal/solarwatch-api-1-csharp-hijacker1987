@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SolarWatch.Contracts;
@@ -74,12 +75,13 @@ public class AuthController : ControllerBase
         return Ok(new AuthResponse(result.Email, result.UserName, result.Token));
     }
     
-    [HttpPatch("ChangePassword")]
+    [HttpPatch("ChangePassword"), Authorize(Roles = "Admin, User")]
     public async Task<ActionResult<ChangePasswordResponse>> ChangePassword([FromBody] ChangePasswordRequest request)
     {
         try
         {
             var existingUser = await _userManager.FindByEmailAsync(request.Email);
+            Console.WriteLine(request);
             if (existingUser == null)
             {
                 return BadRequest(existingUser);
