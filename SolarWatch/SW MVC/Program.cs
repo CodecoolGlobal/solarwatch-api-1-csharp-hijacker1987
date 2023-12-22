@@ -30,10 +30,6 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}");
-    endpoints.MapControllerRoute(
-        name: "sw",
-        pattern: "SW/{action=GetCityWithSunriseSunsetTimes}/{name}",
-        defaults: new { controller = "SW" });
 });
 
 app.Run();

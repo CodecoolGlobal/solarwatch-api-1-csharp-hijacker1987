@@ -1,8 +1,12 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model SW_MVC.Models.City
+
+@{
+    ViewBag.Title = "Sunrise and Sunset Times";
+    Layout = "_Layout";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h2>@ViewBag.Title</h2>
+
+<p>Name: @ViewBag.Name</p>
+<p>SunRiseTime: @ViewBag.SunRiseTime</p>
+<p>SunSetTime: @ViewBag.SunSetTime</p>
